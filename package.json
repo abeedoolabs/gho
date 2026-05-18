@@ -1,13 +1,21 @@
 {
   "name": "@abeedoo/ghost-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Minimal CLI for managing Ghost CMS posts, pages, and tags",
   "type": "module",
   "bin": {
-    "ghost-cli": "./bin/ghost-cli.mjs"
+    "ghost-cli": "bin/ghost-cli.mjs"
   },
-  "files": ["bin"],
-  "keywords": ["ghost", "cms", "cli", "blog", "publishing"],
+  "files": [
+    "bin"
+  ],
+  "keywords": [
+    "ghost",
+    "cms",
+    "cli",
+    "blog",
+    "publishing"
+  ],
   "author": "Clifford Meece <clifford.meece@me.com>",
   "license": "MIT",
   "repository": {
