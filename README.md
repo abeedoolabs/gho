@@ -1,19 +1,19 @@
-# @abeedoo/ghost-cli
+# @abeedoo/gho
 
 Minimal CLI for managing Ghost CMS posts, pages, and tags. Zero dependencies.
 
-**[npm](https://www.npmjs.com/package/@abeedoo/ghost-cli)** · **[GitHub](https://github.com/abeedoolabs/ghost-cli)**
+**[npm](https://www.npmjs.com/package/@abeedoo/gho)** · **[GitHub](https://github.com/abeedoolabs/ghost-cli)**
 
 ## Install
 
 ```bash
-npm install -g @abeedoo/ghost-cli
+npm install -g @abeedoo/gho
 ```
 
 Or use with npx:
 
 ```bash
-npx @abeedoo/ghost-cli list posts
+npx @abeedoo/gho list posts
 ```
 
 ## Setup
@@ -32,7 +32,7 @@ export GHOST_ADMIN_API_KEY=your-id:your-secret
 ### 2. --env flag
 
 ```bash
-ghost-cli --env /path/to/config list posts
+gho --env /path/to/config list posts
 ```
 
 ### 3. `.ghost-cli` file (recommended)
@@ -76,9 +76,9 @@ GHOST_ADMIN_API_KEY=id:secret
 Use with the `--site` flag:
 
 ```bash
-ghost-cli --site staging list posts
-ghost-cli --site client-blog publish my-post
-ghost-cli list posts                          # uses default
+gho --site staging list posts
+gho --site client-blog publish my-post
+gho list posts                          # uses default
 ```
 
 ## Commands
@@ -86,16 +86,16 @@ ghost-cli list posts                          # uses default
 ### List content
 
 ```bash
-ghost-cli list posts                    # all posts
-ghost-cli list posts --status draft     # drafts only
-ghost-cli list posts --status published # published only
-ghost-cli list pages                    # all pages
+gho list posts                    # all posts
+gho list posts --status draft     # drafts only
+gho list posts --status published # published only
+gho list pages                    # all pages
 ```
 
 ### Create a draft
 
 ```bash
-ghost-cli draft my-post-slug "My Post Title" content.md
+gho draft my-post-slug "My Post Title" content.md
 ```
 
 Creates a draft post from a markdown file. If the file starts with `# Title`, the first line is stripped (the title comes from the argument). If a post with that slug already exists, it's replaced.
@@ -103,14 +103,14 @@ Creates a draft post from a markdown file. If the file starts with `# Title`, th
 ### Publish / Unpublish
 
 ```bash
-ghost-cli publish my-post-slug
-ghost-cli unpublish my-post-slug
+gho publish my-post-slug
+gho unpublish my-post-slug
 ```
 
 ### Get post details
 
 ```bash
-ghost-cli get my-post-slug
+gho get my-post-slug
 ```
 
 Shows title, status, URL, preview link, tags, and excerpt.
@@ -118,7 +118,7 @@ Shows title, status, URL, preview link, tags, and excerpt.
 ### Update content
 
 ```bash
-ghost-cli update my-post-slug updated-content.md
+gho update my-post-slug updated-content.md
 ```
 
 Replaces the post content from a markdown file. Preserves title, tags, and status.
@@ -126,13 +126,13 @@ Replaces the post content from a markdown file. Preserves title, tags, and statu
 ### Delete
 
 ```bash
-ghost-cli delete my-post-slug
+gho delete my-post-slug
 ```
 
 ### List tags
 
 ```bash
-ghost-cli tags
+gho tags
 ```
 
 Shows all tags with post counts, sorted by usage.

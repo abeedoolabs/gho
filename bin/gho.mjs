@@ -1,20 +1,20 @@
 #!/usr/bin/env node
-// ghost-cli.mjs — manage Ghost posts/pages from the command line
+// gho.mjs — manage Ghost posts/pages from the command line
 // Usage:
-//   node ghost-cli.mjs list [posts|pages] [--status draft|published|all]
-//   node ghost-cli.mjs draft <slug> <title> <markdown-file>
-//   node ghost-cli.mjs publish <slug>
-//   node ghost-cli.mjs unpublish <slug>
-//   node ghost-cli.mjs delete <slug>
-//   node ghost-cli.mjs get <slug>
-//   node ghost-cli.mjs update <slug> <markdown-file>
-//   node ghost-cli.mjs tags
+//   node gho.mjs list [posts|pages] [--status draft|published|all]
+//   node gho.mjs draft <slug> <title> <markdown-file>
+//   node gho.mjs publish <slug>
+//   node gho.mjs unpublish <slug>
+//   node gho.mjs delete <slug>
+//   node gho.mjs get <slug>
+//   node gho.mjs update <slug> <markdown-file>
+//   node gho.mjs tags
 
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 
-// Load config — priority: env vars > --env flag > --site in .ghost-cli > .ghost-cli default > .env
+// Load config — priority: env vars > --env flag > --site in .gho > .gho default > .env
 
 // Parse a flat env file into { key: value }
 function loadFlat(filePath) {
@@ -28,7 +28,7 @@ function loadFlat(filePath) {
   return vars;
 }
 
-// Parse a .ghost-cli file with optional [site] sections
+// Parse a .gho file with optional [site] sections
 // Format:
 //   # default site (no section header)
 //   GHOST_URL=https://default-site.com
@@ -75,18 +75,18 @@ if (envFile) {
   if (!fs.existsSync(envFile)) { console.error(`File not found: ${envFile}`); process.exit(1); }
   fileVars = loadFlat(envFile);
 } else {
-  const ghostCliPath = path.resolve(process.cwd(), '.ghost-cli');
+  const ghostCliPath = path.resolve(process.cwd(), '.gho');
   const dotEnvPath = path.resolve(process.cwd(), '.env');
 
   if (siteName) {
-    // --site requires .ghost-cli with sections
+    // --site requires .gho with sections
     if (!fs.existsSync(ghostCliPath)) {
-      console.error('--site requires a .ghost-cli file with [section] headers');
+      console.error('--site requires a .gho file with [section] headers');
       process.exit(1);
     }
     const sites = loadGhostCli(ghostCliPath);
     if (!sites[siteName]) {
-      console.error(`Site "${siteName}" not found in .ghost-cli`);
+      console.error(`Site "${siteName}" not found in .gho`);
       console.error(`Available sites: ${Object.keys(sites).filter(s => s !== 'default' || Object.keys(sites[s]).length).join(', ')}`);
       process.exit(1);
     }
@@ -104,17 +104,17 @@ const ADMIN_KEY = process.env.GHOST_ADMIN_API_KEY || fileVars.GHOST_ADMIN_API_KE
 if (!GHOST_URL) {
   console.error('GHOST_URL not found. Set it via:');
   console.error('  - Environment variable: export GHOST_URL=https://...');
-  console.error('  - Flag: ghost-cli --env /path/to/config list posts');
-  console.error('  - Config file: .ghost-cli or .env in current directory');
-  console.error('  - Multi-site: ghost-cli --site staging list posts');
+  console.error('  - Flag: gho --env /path/to/config list posts');
+  console.error('  - Config file: .gho or .env in current directory');
+  console.error('  - Multi-site: gho --site staging list posts');
   process.exit(1);
 }
 if (!ADMIN_KEY) {
   console.error('GHOST_ADMIN_API_KEY not found. Set it via:');
   console.error('  - Environment variable: export GHOST_ADMIN_API_KEY=id:secret');
-  console.error('  - Flag: ghost-cli --env /path/to/config list posts');
-  console.error('  - Config file: .ghost-cli or .env in current directory');
-  console.error('  - Multi-site: ghost-cli --site staging list posts');
+  console.error('  - Flag: gho --env /path/to/config list posts');
+  console.error('  - Config file: .gho or .env in current directory');
+  console.error('  - Multi-site: gho --site staging list posts');
   process.exit(1);
 }
 
@@ -168,11 +168,11 @@ function htmlToMobiledoc(html) {
 // Version & help flags (check before config so they work without credentials)
 const VERSION = '1.0.0';
 if (process.argv.includes('--version') || process.argv.includes('-v')) {
-  console.log(`ghost-cli v${VERSION}`);
+  console.log(`gho v${VERSION}`);
   process.exit(0);
 }
 if (process.argv.includes('--help') || process.argv.includes('-h') || process.argv.length <= 2) {
-  console.log(`ghost-cli v${VERSION} — manage Ghost posts from the command line
+  console.log(`gho v${VERSION} — manage Ghost posts from the command line
 
 Commands:
   list [posts|pages] [--status draft|published|all]
@@ -185,7 +185,7 @@ Commands:
   tags
 
 Options:
-  --site <name>   Use a named site from .ghost-cli
+  --site <name>   Use a named site from .gho
   --env <file>    Load config from a specific file
   --version, -v   Show version
   --help, -h      Show this help
@@ -193,10 +193,10 @@ Options:
 Config (priority order):
   1. Environment variables: GHOST_URL, GHOST_ADMIN_API_KEY
   2. --env <file> flag
-  3. .ghost-cli file (supports multiple sites via [sections])
+  3. .gho file (supports multiple sites via [sections])
   4. .env file in current directory
 
-Multi-site .ghost-cli example:
+Multi-site .gho example:
   GHOST_URL=https://default-site.com
   GHOST_ADMIN_API_KEY=id:secret
 
@@ -334,5 +334,5 @@ switch (cmd) {
 
   default:
     console.error(`Unknown command: ${cmd}`);
-    console.error('Run ghost-cli --help for usage.');
+    console.error('Run gho --help for usage.');
 }

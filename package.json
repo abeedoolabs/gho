@@ -1,10 +1,10 @@
 {
-  "name": "@abeedoo/ghost-cli",
-  "version": "1.0.1",
+  "name": "@abeedoo/gho",
+  "version": "1.0.0",
   "description": "Minimal CLI for managing Ghost CMS posts, pages, and tags",
   "type": "module",
   "bin": {
-    "ghost-cli": "bin/ghost-cli.mjs"
+    "gho": "bin/gho.mjs"
   },
   "files": [
     "bin"
