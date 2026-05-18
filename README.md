@@ -2,6 +2,8 @@
 
 Minimal CLI for managing Ghost CMS posts, pages, and tags. Zero dependencies.
 
+**[npm](https://www.npmjs.com/package/@abeedoo/ghost-cli)** · **[GitHub](https://github.com/abeedoolabs/ghost-cli)**
+
 ## Install
 
 ```bash
