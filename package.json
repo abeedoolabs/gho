@@ -1,6 +1,6 @@
 {
   "name": "@abeedoo/gho",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Minimal CLI for managing Ghost CMS posts, pages, and tags",
   "type": "module",
   "bin": {
@@ -20,7 +20,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abeedoolabs/ghost-cli.git"
+    "url": "git+https://github.com/abeedoolabs/gho.git"
   },
   "engines": {
     "node": ">=18.0.0"

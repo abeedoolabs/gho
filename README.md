@@ -2,7 +2,7 @@
 
 Minimal CLI for managing Ghost CMS posts, pages, and tags. Zero dependencies.
 
-**[npm](https://www.npmjs.com/package/@abeedoo/gho)** · **[GitHub](https://github.com/abeedoolabs/ghost-cli)**
+**[npm](https://www.npmjs.com/package/@abeedoo/gho)** · **[GitHub](https://github.com/abeedoolabs/gho)**
 
 ## Install
 
@@ -35,20 +35,20 @@ export GHOST_ADMIN_API_KEY=your-id:your-secret
 gho --env /path/to/config list posts
 ```
 
-### 3. `.ghost-cli` file (recommended)
+### 3. `.gho` file (recommended)
 
-Create a `.ghost-cli` file in your project root:
+Create a `.gho` file in your project root:
 
 ```
 GHOST_URL=https://your-ghost-site.com
 GHOST_ADMIN_API_KEY=your-id:your-secret
 ```
 
-Add `.ghost-cli` to your `.gitignore` — it contains secrets.
+Add `.gho` to your `.gitignore` — it contains secrets.
 
 ### 4. `.env` file
 
-Falls back to `.env` if no `.ghost-cli` file is found:
+Falls back to `.env` if no `.gho` file is found:
 
 ```env
 GHOST_URL=https://your-ghost-site.com
@@ -57,7 +57,7 @@ GHOST_ADMIN_API_KEY=your-id:your-secret
 
 ### Multi-site config
 
-Your `.ghost-cli` file can contain multiple sites using `[section]` headers:
+Your `.gho` file can contain multiple sites using `[section]` headers:
 
 ```
 # Default site (used when no --site flag)
