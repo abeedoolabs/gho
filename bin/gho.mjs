@@ -182,6 +182,7 @@ Commands:
   delete <slug>
   get <slug>
   update <slug> <markdown-file>
+  retitle <slug> <new title>
   tags
 
 Options:
@@ -321,6 +322,20 @@ switch (cmd) {
       body: JSON.stringify({ posts: [{ mobiledoc, updated_at: post.updated_at }] })
     });
     console.log(`Updated: ${slug}`);
+    break;
+  }
+
+  case 'retitle': {
+    const [slug, ...titleParts] = args;
+    const newTitle = titleParts.join(' ');
+    if (!slug || !newTitle) { console.error('Usage: retitle <slug> <new title>'); break; }
+    const post = await findPost(slug);
+    if (!post) { console.error(`Post not found: ${slug}`); break; }
+    const d = await api(`posts/${post.id}/`, {
+      method: 'PUT',
+      body: JSON.stringify({ posts: [{ title: newTitle, updated_at: post.updated_at }] })
+    });
+    console.log(`Retitled: "${post.title}" → "${newTitle}"`);
     break;
   }
 
