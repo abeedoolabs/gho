@@ -143,8 +143,9 @@ async function api(endpoint, opts = {}) {
   return res.json();
 }
 
-async function findPost(slug, status = 'all') {
-  const d = await api(`posts/?filter=slug:${slug}&status=${status}&limit=1`);
+async function findPost(slug, status = 'all', formats = '') {
+  const fmt = formats ? `&formats=${formats}` : '';
+  const d = await api(`posts/?filter=slug:${slug}&status=${status}&limit=1${fmt}`);
   return d.posts?.[0] || null;
 }
 
@@ -311,17 +312,31 @@ switch (cmd) {
   case 'update': {
     const [slug, file] = args;
     if (!slug || !file) { console.error('Usage: update <slug> <markdown-file>'); break; }
-    const post = await findPost(slug);
+    const post = await findPost(slug, 'all', 'mobiledoc,lexical');
     if (!post) { console.error(`Post not found: ${slug}`); break; }
     const src = fs.readFileSync(file, 'utf8');
     const lines = src.split('\n');
     const markdown = lines[0].startsWith('# ') ? lines.slice(1).join('\n').trim() : src.trim();
-    const mobiledoc = mdToMobiledoc(markdown);
-    const d = await api(`posts/${post.id}/`, {
-      method: 'PUT',
-      body: JSON.stringify({ posts: [{ mobiledoc, updated_at: post.updated_at }] })
-    });
-    console.log(`Updated: ${slug}`);
+
+    if (post.lexical && !post.mobiledoc) {
+      // Post was converted to lexical — must delete and recreate
+      const { title, status, tags } = post;
+      const tagNames = (tags || []).map(t => ({ name: t.name }));
+      await api(`posts/${post.id}/`, { method: 'DELETE' });
+      const mobiledoc = mdToMobiledoc(markdown);
+      const d = await api('posts/', {
+        method: 'POST',
+        body: JSON.stringify({ posts: [{ title, slug, status, tags: tagNames, mobiledoc }] })
+      });
+      console.log(`Updated (recreated from lexical): ${slug}`);
+    } else {
+      const mobiledoc = mdToMobiledoc(markdown);
+      const d = await api(`posts/${post.id}/`, {
+        method: 'PUT',
+        body: JSON.stringify({ posts: [{ mobiledoc, updated_at: post.updated_at }] })
+      });
+      console.log(`Updated: ${slug}`);
+    }
     break;
   }
 
