@@ -185,6 +185,7 @@ Commands:
   update <slug> <markdown-file>
   retitle <slug> <new title>
   tags
+  install-skill                     Install Claude Code skill to ~/.claude/skills/gho/
 
 Options:
   --site <name>   Use a named site from .gho
@@ -359,6 +360,19 @@ switch (cmd) {
     const tags = d.tags || [];
     if (!tags.length) { console.log('No tags.'); break; }
     tags.forEach(t => console.log(`${String(t.count?.posts || 0).padStart(3)} ${t.name}`));
+    break;
+  }
+
+  case 'install-skill': {
+    const skillSrc = new URL('../SKILL.md', import.meta.url);
+    const homeDir = process.env.HOME || process.env.USERPROFILE;
+    const destDir = path.join(homeDir, '.claude', 'skills', 'gho');
+    const destFile = path.join(destDir, 'SKILL.md');
+
+    fs.mkdirSync(destDir, { recursive: true });
+    fs.copyFileSync(new URL(skillSrc), destFile);
+    console.log(`Skill installed: ${destFile}`);
+    console.log('Claude Code will now recognize /gho commands.');
     break;
   }
 

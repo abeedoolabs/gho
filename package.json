@@ -1,20 +1,24 @@
 {
   "name": "@abeedoo/gho",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Minimal CLI for managing Ghost CMS posts, pages, and tags",
   "type": "module",
   "bin": {
     "gho": "bin/gho.mjs"
   },
   "files": [
-    "bin"
+    "bin",
+    "SKILL.md"
   ],
   "keywords": [
     "ghost",
     "cms",
     "cli",
     "blog",
-    "publishing"
+    "publishing",
+    "claude-code",
+    "skill",
+    "ai"
   ],
   "author": "Clifford Meece <clifford.meece@me.com>",
   "license": "MIT",

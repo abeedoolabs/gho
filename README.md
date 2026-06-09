@@ -137,6 +137,24 @@ gho tags
 
 Shows all tags with post counts, sorted by usage.
 
+## Claude Code Skill
+
+Install gho as a Claude Code skill so Claude can manage your Ghost blog conversationally:
+
+```bash
+gho install-skill
+```
+
+This copies the SKILL.md to `~/.claude/skills/gho/`. After installation, you can use `/gho` commands in Claude Code or just ask naturally:
+
+- "list my drafts"
+- "publish the fence post"
+- "draft a new post from drafts/my-post.md"
+
+The skill is also available on community marketplaces:
+- [Claude Skills Market](https://www.claudeskillsmarket.com/)
+- [SkillsMP](https://skillsmp.com/)
+
 ## How It Works
 
 Uses Ghost's Admin API with JWT authentication. The CLI constructs JWTs from your Admin API key using Node's built-in `crypto` module — no external dependencies.
